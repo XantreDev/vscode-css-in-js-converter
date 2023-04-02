@@ -23,7 +23,9 @@
   },
   "scripts": {
     "build": "esbuild ./src/extension --format=cjs --bundle \"--alias:css-in-js-helpers=./../css-in-js-helpers/dist/index.js\" --platform=node --external:vscode --outfile=./dist/extension.js",
+    "compile-tests": "tsx ./scripts/compileTests",
     "vscode:publish": "vsce publish --no-dependencies",
+    "test": "node ./dist-test/runTest.js",
     "format": "prettier \"src/**/*\" --write --ignore-unknown",
     "lint": "tsc --noEmit"
   },
@@ -79,9 +81,16 @@
     }
   },
   "devDependencies": {
-    "@types/node": "^6.0.40",
+    "@types/chai": "^4.3.4",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "^18.15.11",
     "@types/vscode": "^1.76.0",
-    "esbuild": "^0.17.11"
+    "@vscode/test-electron": "^2.3.0",
+    "chai": "^4.3.7",
+    "esbuild": "^0.17.11",
+    "fast-glob": "^3.2.12",
+    "mocha": "^10.2.0",
+    "radash": "^10.8.1"
   },
   "dependencies": {
     "css-in-js-helpers": "^1.0.1"
