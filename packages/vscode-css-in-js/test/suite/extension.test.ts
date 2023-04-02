@@ -23,77 +23,67 @@ test('Extension has convert options in workbench', async () => {
     'Convert options should be available'
   )
 })
+
+const assertStringEqual = (actual: string, expected: string, error?: string) =>
+  assert.equal(
+    prepareForComparison(actual),
+    prepareForComparison(expected),
+    error
+  )
+
+const prepareForComparison = (text: string) => text.split('\r\n').join('\n')
+
+const testConvert = (language: 'typescript' | 'javascript') => async () => {
+  await vscode.commands.executeCommand('workbench.action.files.newUntitledFile')
+  const textEditor = vscode.window.activeTextEditor
+  assert(textEditor, 'Text editor should be opened')
+  const textDocument = textEditor?.document
+  assert(textDocument, 'Document should be opened')
+
+  await vscode.languages.setTextDocumentLanguage(textDocument, language)
+
+  const write = writeText(textEditor)
+
+  await write(stylesJsObject)
+  assertStringEqual(
+    textDocument.getText(),
+    stylesJsObject,
+    'Should be equal initial'
+  )
+
+  selectAllText(textEditor)
+  assertStringEqual(
+    textDocument.getText(),
+    textDocument.getText(textEditor.selection),
+    'All text should be selected'
+  )
+
+  await runConvertCommand()
+
+  assertStringEqual(
+    textDocument.getText(),
+    stylesCss,
+    'Should convert correctly'
+  )
+
+  await runConvertCommand()
+  assertStringEqual(
+    textDocument.getText(),
+    stylesJsObject,
+    'Should convert correctly'
+  )
+}
+
 suite('Extension convertion test', () => {
   beforeEach(async () => {
     await vscode.commands.executeCommand('workbench.action.closeAllEditors')
-    await vscode.commands.executeCommand(
-      'workbench.action.files.newUntitledFile'
-    )
-    const textDocument = vscode.window.activeTextEditor?.document
-    assert(textDocument, 'Document should be opened')
   })
 
-  const assertStringEqual = (
-    actual: string,
-    expected: string,
-    error?: string
-  ) =>
-    assert.equal(
-      prepareForComparison(actual),
-      prepareForComparison(expected),
-      error
-    )
+  afterEach(async () => {})
 
-  const prepareForComparison = (text: string) => text.split('\r\n').join('\n')
+  test('Works in typescript', testConvert('typescript'))
 
-  afterEach(async () => {
-    const textEditor = vscode.window.activeTextEditor
-    assert(textEditor, 'Text editor should be opened')
-    const textDocument = textEditor.document
-
-    const write = writeText(textEditor)
-
-    await write(stylesJsObject)
-    assertStringEqual(
-      textDocument.getText(),
-      stylesJsObject,
-      'Should be equal initial'
-    )
-
-    selectAllText(textEditor)
-    assertStringEqual(
-      textDocument.getText(),
-      textDocument.getText(textEditor.selection),
-      'All text should be selected'
-    )
-
-    await runConvertCommand()
-
-    assertStringEqual(
-      textDocument.getText(),
-      stylesCss,
-      'Should convert correctly'
-    )
-
-    await runConvertCommand()
-    assertStringEqual(
-      textDocument.getText(),
-      stylesJsObject,
-      'Should convert correctly'
-    )
-  })
-
-  test('Works in typescript', async () => {
-    const textDocument = vscode.window.activeTextEditor?.document
-    assert(textDocument)
-    await vscode.languages.setTextDocumentLanguage(textDocument, 'typescript')
-  })
-
-  test('Works with javascript', async () => {
-    const textDocument = vscode.window.activeTextEditor?.document
-    assert(textDocument)
-    await vscode.languages.setTextDocumentLanguage(textDocument, 'javascript')
-  })
+  test('Works with javascript', testConvert('javascript'))
 })
 
 const stylesJsObject = `\

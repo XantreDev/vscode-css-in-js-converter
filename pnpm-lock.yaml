@@ -69,9 +69,6 @@ importers:
       mocha:
         specifier: ^10.2.0
         version: 10.2.0
-      radash:
-        specifier: ^10.8.1
-        version: 10.8.1
 
 packages:
 
@@ -2652,11 +2649,6 @@ packages:
   /quick-lru@4.0.1:
     resolution: {integrity: sha512-ARhCpm70fzdcvNQfPoy49IaanKkTlRWF2JMzqhcJbhSFRZv7nPTvZJdcY7301IPmvW+/p0RgIWnQDLJxifsQ7g==}
     engines: {node: '>=8'}
-    dev: true
-
-  /radash@10.8.1:
-    resolution: {integrity: sha512-NzYo3XgM9Tzjf5iFPIMG2l5+LSOCi2H7Axe3Ry/1PrhlvuqxUoiLsmcTBtw4CfKtzy5Fzo79STiEj9JZWMfDQg==}
-    engines: {node: '>=14.18.0'}
     dev: true
 
   /randombytes@2.1.0:

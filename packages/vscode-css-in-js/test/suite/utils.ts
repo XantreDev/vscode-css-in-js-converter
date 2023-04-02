@@ -1,4 +1,5 @@
-export { sleep } from 'radash'
+export const sleep = (time: number) =>
+  new Promise((resolve) => setTimeout(resolve, time))
 import { Selection, TextEditor } from 'vscode'
 
 export const selectAllText = (editor: TextEditor) => {
@@ -17,4 +18,3 @@ export const writeText = (editor: TextEditor) => (content: string) =>
   editor.edit((editBuilder) => {
     editBuilder.insert(editor.selection.active, content)
   })
-

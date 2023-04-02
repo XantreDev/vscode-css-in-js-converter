@@ -89,8 +89,7 @@
     "chai": "^4.3.7",
     "esbuild": "^0.17.11",
     "fast-glob": "^3.2.12",
-    "mocha": "^10.2.0",
-    "radash": "^10.8.1"
+    "mocha": "^10.2.0"
   },
   "dependencies": {
     "css-in-js-helpers": "^1.0.1"
