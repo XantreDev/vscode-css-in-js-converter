@@ -16,7 +16,7 @@ async function main() {
     await runTests({
       extensionDevelopmentPath,
       extensionTestsPath,
-      launchArgs: ['--disable-extensions', '--skip-getting-started'],
+      launchArgs: ['--skip-getting-started'],
     })
   } catch (err) {
     console.error('Failed to run tests')

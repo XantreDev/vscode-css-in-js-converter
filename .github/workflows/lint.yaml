@@ -1,7 +1,7 @@
 name: Lint
 on:
   push:
-    branches: ['master', 'main']
+    branches: ['master', 'main', 'release/*']
   pull_request:
     types: [opened, synchronize]
 
@@ -13,7 +13,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: pnpm/action-setup@v2
         with:
-          version: 7
+          version: 8
 
       - uses: actions/setup-node@v3
         with:
