@@ -11,7 +11,7 @@
       "inputs": ["scripts/**", "test/**"]
     },
     "test": {
-      "dependsOn": ["compile-tests", "^build"]
+      "dependsOn": ["compile-tests", "build"]
     },
     "vscode:publish": {
       "dependsOn": ["^build"]

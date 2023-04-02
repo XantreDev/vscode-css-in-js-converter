@@ -1,5 +1,4 @@
 import { before } from 'mocha'
-import { sleep } from 'radash'
 import * as vscode from 'vscode'
 
 const checkExtension = async (extension: vscode.Extension<unknown>) => {
@@ -11,16 +10,17 @@ const checkExtension = async (extension: vscode.Extension<unknown>) => {
 
 before(async () => {
   const extensionId = 'xantregodlike.convert-css-in-js-reborn'
-  {
-    const extension = vscode.extensions.getExtension(extensionId)
-    if (extension) {
-      return checkExtension(extension)
-    }
-  }
+  // {
+  //   const extension = vscode.extensions.getExtension(extensionId)
+  //   if (extension) {
+  //     return checkExtension(extension)
+  //   }
+  // }
 
-  await sleep(10_000)
+  // await sleep(10_000)
   const extension = vscode.extensions.getExtension(extensionId)
   if (!extension) {
     throw new Error(`Extension "${extensionId}" not found`)
   }
+  await checkExtension(extension)
 })
