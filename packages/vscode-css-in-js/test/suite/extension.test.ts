@@ -33,6 +33,19 @@ suite('Extension convertion test', () => {
     assert(textDocument, 'Document should be opened')
   })
 
+  const assertStringEqual = (
+    actual: string,
+    expected: string,
+    error?: string
+  ) =>
+    assert.equal(
+      prepareForComparison(actual),
+      prepareForComparison(expected),
+      error
+    )
+
+  const prepareForComparison = (text: string) => text.split('\r\n').join('\n')
+
   afterEach(async () => {
     const textEditor = vscode.window.activeTextEditor
     assert(textEditor, 'Text editor should be opened')
@@ -41,14 +54,14 @@ suite('Extension convertion test', () => {
     const write = writeText(textEditor)
 
     await write(stylesJsObject)
-    assert.equal(
+    assertStringEqual(
       textDocument.getText(),
       stylesJsObject,
       'Should be equal initial'
     )
 
     selectAllText(textEditor)
-    assert.equal(
+    assertStringEqual(
       textDocument.getText(),
       textDocument.getText(textEditor.selection),
       'All text should be selected'
@@ -56,10 +69,14 @@ suite('Extension convertion test', () => {
 
     await runConvertCommand()
 
-    assert.equal(textDocument.getText(), stylesCss, 'Should convert correctly')
+    assertStringEqual(
+      textDocument.getText(),
+      stylesCss,
+      'Should convert correctly'
+    )
 
     await runConvertCommand()
-    assert.equal(
+    assertStringEqual(
       textDocument.getText(),
       stylesJsObject,
       'Should convert correctly'
