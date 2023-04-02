@@ -22,6 +22,8 @@ jobs:
         with:
           node-version: 18
           cache: 'pnpm'
+      - name: Install typescript runner
+        run: pnpm i -g tsx
       - name: Install dependencies
         run: pnpm i
       - name: Run tests

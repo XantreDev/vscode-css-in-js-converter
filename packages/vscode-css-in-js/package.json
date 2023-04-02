@@ -23,7 +23,7 @@
   },
   "scripts": {
     "build": "esbuild ./src/extension --format=cjs --bundle \"--alias:css-in-js-helpers=./../css-in-js-helpers/dist/index.js\" --platform=node --external:vscode --outfile=./dist/extension.js",
-    "compile-tests": "tsx ./scripts/compileTests",
+    "compile-tests": "pnpm tsx ./scripts/compileTests",
     "vscode:publish": "vsce publish --no-dependencies",
     "test": "node ./dist-test/runTest.js",
     "format": "prettier \"src/**/*\" --write --ignore-unknown",
