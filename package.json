@@ -10,7 +10,8 @@
     "@vscode/vsce": "^2.18.0",
     "prettier": "^2.8.4",
     "turbo": "^1.8.8",
-    "typescript": "^5.0.2"
+    "typescript": "^5.0.2",
+    "tsx": "^3.12.6"
   },
   "author": "XantreGodlike",
   "homepage": "https://github.com/XantreGodlike/css-in-js#readme",
