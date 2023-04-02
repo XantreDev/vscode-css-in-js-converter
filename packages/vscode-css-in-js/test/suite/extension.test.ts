@@ -1,10 +1,10 @@
 import { assert } from 'chai'
-import { afterEach, beforeEach, test } from 'mocha'
+import { beforeEach, test } from 'mocha'
 
 // You can import and use all API from the 'vscode' module
 // as well as import your extension to test it
 import * as vscode from 'vscode'
-import { selectAllText, sleep, writeText } from './utils'
+import { selectAllText, sleep } from './utils'
 // import * as myExtension from '../../extension';
 
 const EXTENSION_COMMAND = 'extension.convertCSSinJS'
@@ -34,17 +34,14 @@ const assertStringEqual = (actual: string, expected: string, error?: string) =>
 const prepareForComparison = (text: string) => text.split('\r\n').join('\n')
 
 const testConvert = (language: 'typescript' | 'javascript') => async () => {
-  await vscode.commands.executeCommand('workbench.action.files.newUntitledFile')
-  const textEditor = vscode.window.activeTextEditor
+  const textDocument = await vscode.workspace.openTextDocument({
+    content: stylesJsObject,
+    language,
+  })
+  console.log(textDocument.languageId)
+  const textEditor = await vscode.window.showTextDocument(textDocument)
   assert(textEditor, 'Text editor should be opened')
-  const textDocument = textEditor?.document
-  assert(textDocument, 'Document should be opened')
 
-  await vscode.languages.setTextDocumentLanguage(textDocument, language)
-
-  const write = writeText(textEditor)
-
-  await write(stylesJsObject)
   assertStringEqual(
     textDocument.getText(),
     stylesJsObject,
@@ -79,9 +76,7 @@ suite('Extension convertion test', () => {
     await vscode.commands.executeCommand('workbench.action.closeAllEditors')
   })
 
-  afterEach(async () => {})
-
-  test('Works in typescript', testConvert('typescript'))
+  test('Works with typescript', testConvert('typescript'))
 
   test('Works with javascript', testConvert('javascript'))
 })
