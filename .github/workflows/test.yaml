@@ -27,4 +27,8 @@ jobs:
       - name: Install dependencies
         run: pnpm i
       - name: Run tests
+        run: xvfb-run -a pnpm test
+        if: runner.os == 'Linux'
+      - name: Run tests
         run: pnpm test
+        if: runner.os != 'Linux'
