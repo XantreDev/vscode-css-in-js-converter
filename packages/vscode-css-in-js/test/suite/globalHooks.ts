@@ -18,7 +18,7 @@ before(async () => {
     }
   }
 
-  await sleep(2000)
+  await sleep(10_000)
   const extension = vscode.extensions.getExtension(extensionId)
   if (!extension) {
     throw new Error(`Extension "${extensionId}" not found`)
