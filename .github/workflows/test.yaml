@@ -1,0 +1,38 @@
+name: End-to-end tests
+on:
+  pull_request:
+    branches:
+      - release/*
+      - release
+      - main
+      - master
+  push:
+    branches:
+      - release/*
+      - release
+      - main
+      - master
+jobs:
+  test:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm i
+      - name: Run tests
+        run: xvfb-run -a pnpm test
+        if: runner.os == 'Linux'
+      - name: Run tests
+        run: pnpm test
+        if: runner.os != 'Linux'

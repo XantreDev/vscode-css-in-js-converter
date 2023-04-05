@@ -19,7 +19,7 @@ export function activate(context: ExtensionContext) {
       const selection = editor.selection
       const selectedText = editor.document.getText(selection)
 
-      editor.edit((builder) => {
+      return editor.edit((builder) => {
         builder.replace(editor.selection, convert(selectedText))
       })
     }
