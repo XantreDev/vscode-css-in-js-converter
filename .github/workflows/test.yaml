@@ -2,10 +2,15 @@ on:
   pull_request:
     branches:
       - release/*
+      - release
+      - main
+      - master
   push:
     branches:
       - release/*
-      - e2e-testing
+      - release
+      - main
+      - master
 jobs:
   test:
     strategy:
@@ -22,8 +27,6 @@ jobs:
         with:
           node-version: 18
           cache: 'pnpm'
-      #   - name: Install typescript runner
-      #     run: pnpm i -g tsx
       - name: Install dependencies
         run: pnpm i
       - name: Run tests
